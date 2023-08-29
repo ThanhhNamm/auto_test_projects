@@ -1,0 +1,167 @@
+package Practice_TC;
+
+import org.openqa.selenium.*;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import org.openqa.selenium.JavascriptExecutor;
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.support.ui.Select;
+
+
+public class update_profile {
+
+
+    WebDriver chromeDriver = new ChromeDriver();
+    WebDriverWait wait = new WebDriverWait(chromeDriver, Duration.ofSeconds(10));
+
+    @BeforeMethod
+    public void setUp() {
+
+        chromeDriver.get("https://id.trueconnect.vn/Account/login");
+        chromeDriver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+
+        chromeDriver.findElement(By.id("Username")).sendKeys("charlotte");
+        chromeDriver.findElement(By.id("Password")).sendKeys("Nam@1901");
+
+        // explicit wait for "Sign in button" appear and click
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[1]/div/div/form/div[6]/button"))).click();
+        // explicit wait for "Danh thiep dien tu button" appear and click
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div/div/div[4]/a[1]/button"))).click();
+    }
+
+
+    @AfterMethod
+    public void tearDown() {
+
+    }
+
+
+    // Update avatar
+    @Test
+    public void Tescase1() throws AWTException, InterruptedException {
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/app-main/div/div[2]/app-user/div/app-edit/div/app-user-banner/div[2]/div/div[1]/div/button/div"))).click();
+
+        String filePath = "C:\\Users\\Hello\\OneDrive\\Máy tính\\AnhThe.jpg";
+
+        //Sử dụng Robot để điều khiển hệ thống
+        Robot robot = new Robot();
+
+        // Đặt đường dẫn tệp vào clipboard
+        StringSelection stringSelection = new StringSelection(filePath);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+        Thread.sleep(1000);
+        // Gửi phím tắt Ctrl+V để dán đường dẫn tệp
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+        Thread.sleep(1000);
+        // Gửi phím Enter để xác nhận tải lên
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"cdk-overlay-0\"]/nz-modal-container/div/div/div/app-image-resize/div/button"))).click();
+
+
+    }
+
+
+    // Update Cover photo ==> oke
+    @Test
+    public void Testcase2() throws InterruptedException, AWTException {
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/app-main/div/div[2]/app-user/div/app-edit/div/app-user-banner/div[1]/div[2]/button"))).click();
+
+        String expectedValue = "C:\\Users\\Hello\\OneDrive\\Document\\Hình ảnh\\Hình ảnh\\Ảnh mẫu\\368345627_238854679125976_5345742738850022693_n.jpg";
+
+        //Sử dụng Robot để điều khiển hệ thống
+        Robot robot = new Robot();
+
+        // Đặt đường dẫn tệp vào clipboard
+        StringSelection stringSelection = new StringSelection(expectedValue);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+        Thread.sleep(1000);
+        // Gửi phím tắt Ctrl+V để dán đường dẫn tệp
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+        Thread.sleep(1000);
+        // Gửi phím Enter để xác nhận tải lên
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"cdk-overlay-0\"]/nz-modal-container/div/div/div/app-image-resize/div/button"))).click();
+
+
+//        Assert.assertEquals(actualValue, expectedValue);
+
+
+
+    }
+
+    // Update Thông tin nổi bật ==> oke
+    @Test
+    public void Testcase3() throws InterruptedException {
+
+        String actualValue = "Đây được tạo từ automation test";
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/app-root/app-main/div/div[2]/app-user/div/app-edit/div/div/app-user-highlight/div/div/div[2]/button"))).click();
+        Thread.sleep(2000);
+        chromeDriver.findElement(By.xpath("//*[@id=\"formly_2_ui-quill_hightlight_0\"]/div[2]/div[1]")).sendKeys(actualValue);
+        Thread.sleep(2000);
+        chromeDriver.findElement(By.xpath("//*[@id=\"cdk-overlay-0\"]/nz-modal-container/div/div/div/app-user-highlight-modal/div/div/button[2]")).click();
+
+        String expectedValue = chromeDriver.findElement(By.xpath("/html/body/app-root/app-main/div/div[2]/app-user/div/app-edit/div/div/app-user-highlight/div/div[2]/div")).getText();
+        Assert.assertNotEquals(actualValue,expectedValue,"True");
+    }
+
+    // Update Thông tin cá nhân
+    @Test
+    public void Testcase4() throws InterruptedException {
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/app-main/div/div[2]/app-user/div/app-edit/div/div/app-user-basic-edit/div/div[1]/div[2]/button"))).click();
+
+        Thread.sleep(400);
+        chromeDriver.findElement(By.xpath("//*[@id=\"formly_12_ui-input_address_0\"]")).sendKeys("Địa chỉ tạo bằng automation test");
+
+        // update ngày sinh ==> chưa được
+        Thread.sleep(400);
+        WebElement updateDob = chromeDriver.findElement(By.xpath("//*[@id=\"formly_8_ui-datepicker_dob_0\"]/div/input"));
+        updateDob.sendKeys("01/09/2010");
+        updateDob.sendKeys(Keys.ENTER);
+
+
+        // Update Gender ==> oke
+        Thread.sleep(400);
+        WebElement updateGender = chromeDriver.findElement(By.xpath("//*[@id=\"formly_10_ui-select_gender_0\"]/nz-select-top-control/nz-select-search/input"));
+        updateGender.sendKeys("Nam");
+        updateGender.sendKeys(Keys.ENTER);
+
+        // Update Province ==> chưa được
+
+        Thread.sleep(400);
+        WebElement updateCity = chromeDriver.findElement(By.xpath("//*[@id=\"formly_12_ui-select_city_3\"]/nz-select-top-control/nz-select-item/div"));
+        updateCity.sendKeys("Tỉnh Lào Cai");
+        updateCity.sendKeys(Keys.ENTER);
+
+        // Update District ==> chưa được
+        Thread.sleep(200);
+        Select updateDistrict = new Select(chromeDriver.findElement(By.xpath("//*[@id=\"formly_12_ui-select_district_4\"]/nz-select-top-control/nz-select-item")));
+        updateDistrict.selectByVisibleText("Huyện Si Ma Cai");
+
+
+    }
+
+}
