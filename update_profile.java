@@ -3,6 +3,7 @@ package Practice_TC;
 import org.openqa.selenium.*;
 
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -161,6 +162,67 @@ public class update_profile {
         Select updateDistrict = new Select(chromeDriver.findElement(By.xpath("//*[@id=\"formly_12_ui-select_district_4\"]/nz-select-top-control/nz-select-item")));
         updateDistrict.selectByVisibleText("Huyện Si Ma Cai");
 
+    }
+
+
+    // Update thông tin tổ chức
+    @Test
+    public void Testcase5() throws InterruptedException {
+
+        Thread.sleep(10000);
+
+        // Scrolling to the "Thông tin liên hệ" => Để hiện "Thông tin tổ chức" ở giữa màn hình
+        Actions actions = new Actions(chromeDriver);
+        WebElement lastElement = chromeDriver.findElement(By.xpath("/html/body/app-root/app-main/div/div[2]/app-user/div/app-edit/div/div/app-user-contacts-manager/div/div[1]"));
+        actions.moveToElement(lastElement);
+        actions.perform();
+
+        // Open modal "Thông tin tổ chức"
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/app-main/div/div[2]/app-user/div/app-edit/div/div/app-user-organization/div/div[1]/div[2]/button"))).click();
+
+        // Update vị trí
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"formly_11_ui-input_position_0\"]"))).sendKeys("Automation Tester");
+        Thread.sleep(1000);
+        WebElement togglePosition = chromeDriver.findElement(By.xpath("//*[@id=\"cdk-overlay-0\"]/nz-modal-container/div/div/div/app-user-organization-modal/div/app-ui-form/formly-form/formly-field/formly-group/formly-field[1]/formly-group/formly-field[2]/ng-component/formly-field-nz-input/app-toggle/div/nz-switch/button"));
+        Thread.sleep(1000);
+        if (togglePosition.isSelected()) {
+            togglePosition.click();
+        }
+
+        // Update Phòng ban
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"formly_13_ui-input_department_0\"]"))).sendKeys("Technical Department");
+        Thread.sleep(1000);
+        WebElement toggleDepartment = chromeDriver.findElement(By.xpath("//*[@id=\"cdk-overlay-0\"]/nz-modal-container/div/div/div/app-user-organization-modal/div/app-ui-form/formly-form/formly-field/formly-group/formly-field[2]/formly-group/formly-field[2]/ng-component/formly-field-nz-input/app-toggle/div/nz-switch/button"));
+        Thread.sleep(1000);
+        if (toggleDepartment.isSelected()) {
+            toggleDepartment.click();
+        }
+
+        // Update Tổ chức
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"formly_15_ui-input_organization_0\"]"))).sendKeys("Non-profit organization");
+        Thread.sleep(1000);
+        WebElement toggleOrganization = chromeDriver.findElement(By.xpath("//*[@id=\"cdk-overlay-0\"]/nz-modal-container/div/div/div/app-user-organization-modal/div/app-ui-form/formly-form/formly-field/formly-group/formly-field[3]/formly-group/formly-field[2]/ng-component/formly-field-nz-input/app-toggle/div/nz-switch/button"));
+        Thread.sleep(1000);
+        if (toggleOrganization.isSelected()) {
+            toggleOrganization.click();
+        }
+
+        // Update Lĩnh vưc
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"formly_17_ui-input_major_0\"]"))).sendKeys("Information Technology");
+        Thread.sleep(1000);
+        WebElement toggleField = chromeDriver.findElement(By.xpath("//*[@id=\"cdk-overlay-0\"]/nz-modal-container/div/div/div/app-user-organization-modal/div/app-ui-form/formly-form/formly-field/formly-group/formly-field[4]/formly-group/formly-field[2]/ng-component/formly-field-nz-input/app-toggle/div/nz-switch/button"));
+        Thread.sleep(1000);
+        if (toggleField.isSelected()) {
+            toggleField.click();
+        }
+
+
+        // Check kết quả
+//        String expectedValue = "Nam";
+//        String actualValue = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div/div"))).getText();
+//        System.out.println(actualValue);
+//
+//        Assert.assertEquals(expectedValue,actualValue);
 
     }
 
