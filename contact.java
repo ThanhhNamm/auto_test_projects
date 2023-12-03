@@ -15,8 +15,7 @@ import java.time.Duration;
 
 public class contact {
 
-    // set up Driver environment
-    WebDriver chromeDriver = new ChromeDriver();
+    
 
 
     // set up wait syntax
